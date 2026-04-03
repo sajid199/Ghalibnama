@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Ghalib Nama — ग़ालिब नामा</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Nastaliq+Urdu&family=Noto+Serif+Devanagari:wght@300;400;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --gold: #c9a84c;
+      --gold-light: #e8c97a;
+      --cream: #f5f0e8;
+      --ink: #1a1208;
+      --brown: #3d2b1f;
+      --rust: #8b3a1e;
+      --parchment: #ede8d8;
+      --shadow-gold: rgba(201,168,76,0.3);
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: var(--ink);
+      color: var(--cream);
+      font-family: 'Noto Serif Devanagari', serif;
+      overflow-x: hidden;
+    }
+
+    /* ── NOISE TEXTURE OVERLAY ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.5;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 3rem;
+      background: rgba(26,18,8,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(201,168,76,0.2);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--gold);
+      letter-spacing: 2px;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--cream);
+      text-decoration: none;
+      font-size: 0.85rem;
+      letter-spacing: 1px;
+      opacity: 0.75;
+      transition: opacity 0.3s, color 0.3s;
+    }
+
+    .nav-links a:hover { opacity: 1; color: var(--gold); }
+
+    .nav-fb {
+      background: var(--gold);
+      color: var(--ink) !important;
+      padding: 0.5rem 1.2rem;
+      border-radius: 2px;
+      opacity: 1 !important;
+      font-weight: 700;
+      font-size: 0.8rem !important;
+      transition: background 0.3s !important;
+    }
+
+    .nav-fb:hover { background: var(--gold-light) !important; }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      padding: 6rem 2rem 4rem;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(139,58,30,0.25) 0%, transparent 70%),
+        radial-gradient(ellipse 60% 40% at 20% 80%, rgba(201,168,76,0.1) 0%, transparent 60%),
+        var(--ink);
+    }
+
+    /* Decorative border frame */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 80px; left: 40px; right: 40px; bottom: 40px;
+      border: 1px solid rgba(201,168,76,0.15);
+      pointer-events: none;
+    }
+
+    .hero-inner { max-width: 750px; }
+
+    .hero-ornament {
+      color: var(--gold);
+      font-size: 2rem;
+      opacity: 0.6;
+      margin-bottom: 1.5rem;
+      display: block;
+      animation: fadeInDown 1s ease both;
+    }
+
+    .hero-tagline {
+      font-size: 0.8rem;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-transform: uppercase;
+      margin-bottom: 1.2rem;
+      opacity: 0;
+      animation: fadeInUp 1s 0.2s ease forwards;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 700;
+      line-height: 1.1;
+      color: var(--cream);
+      margin-bottom: 0.3rem;
+      opacity: 0;
+      animation: fadeInUp 1s 0.4s ease forwards;
+    }
+
+    .hero-title span { color: var(--gold); font-style: italic; }
+
+    .hero-subtitle-hi {
+      font-size: clamp(1.2rem, 3vw, 2rem);
+      color: var(--gold-light);
+      margin-bottom: 2rem;
+      font-weight: 300;
+      opacity: 0;
+      animation: fadeInUp 1s 0.6s ease forwards;
+    }
+
+    .hero-sher {
+      font-size: clamp(1rem, 2.5vw, 1.3rem);
+      line-height: 2.2;
+      color: rgba(245,240,232,0.8);
+      border-left: 2px solid var(--gold);
+      padding: 1rem 2rem;
+      margin: 2rem auto;
+      text-align: left;
+      max-width: 520px;
+      background: rgba(201,168,76,0.05);
+      opacity: 0;
+      animation: fadeInUp 1s 0.8s ease forwards;
+    }
+
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 2.5rem;
+      opacity: 0;
+      animation: fadeInUp 1s 1s ease forwards;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--ink);
+      border: none;
+      padding: 0.9rem 2.2rem;
+      font-family: 'Noto Serif Devanagari', serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-primary:hover {
+      background: var(--gold-light);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px var(--shadow-gold);
+    }
+
+    .btn-secondary {
+      background: transparent;
+      color: var(--cream);
+      border: 1px solid rgba(245,240,232,0.3);
+      padding: 0.9rem 2.2rem;
+      font-family: 'Noto Serif Devanagari', serif;
+      font-size: 0.95rem;
+      cursor: pointer;
+      letter-spacing: 1px;
+      transition: all 0.3s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-secondary:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+
+    /* ── DIVIDER ── */
+    .divider {
+      text-align: center;
+      color: var(--gold);
+      font-size: 1.5rem;
+      opacity: 0.5;
+      margin: 0.5rem 0;
+    }
+
+    /* ── SECTION COMMON ── */
+    section { padding: 5rem 2rem; }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 3.5rem;
+    }
+
+    .section-label {
+      font-size: 0.75rem;
+      letter-spacing: 4px;
+      color: var(--gold);
+      text-transform: uppercase;
+      display: block;
+      margin-bottom: 0.8rem;
+    }
+
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--cream);
+    }
+
+    .section-title em { color: var(--gold); font-style: italic; }
+
+    /* ── SHAYARI GRID ── */
+    .shayari-section {
+      background: linear-gradient(180deg, var(--ink) 0%, #0f0a04 100%);
+    }
+
+    .shayari-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 1.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .sher-card {
+      background: rgba(245,240,232,0.03);
+      border: 1px solid rgba(201,168,76,0.15);
+      padding: 2rem 1.8rem;
+      position: relative;
+      transition: all 0.4s;
+      cursor: default;
+    }
+
+    .sher-card::before {
+      content: '"';
+      position: absolute;
+      top: -0.5rem; left: 1.5rem;
+      font-family: 'Playfair Display', serif;
+      font-size: 5rem;
+      color: var(--gold);
+      opacity: 0.12;
+      line-height: 1;
+    }
+
+    .sher-card:hover {
+      background: rgba(201,168,76,0.06);
+      border-color: rgba(201,168,76,0.35);
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(0,0,0,0.4);
+    }
+
+    .sher-text {
+      font-size: 1.05rem;
+      line-height: 2.2;
+      color: var(--cream);
+      margin-bottom: 1rem;
+    }
+
+    .sher-meaning {
+      font-size: 0.82rem;
+      color: rgba(201,168,76,0.75);
+      line-height: 1.8;
+      border-top: 1px solid rgba(201,168,76,0.1);
+      padding-top: 0.8rem;
+    }
+
+    .sher-meaning strong { color: var(--gold); }
+
+    /* ── ABOUT ── */
+    .about-section {
+      background: #0f0a04;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .about-section::before {
+      content: 'ग़ालिब';
+      position: absolute;
+      right: -2rem;
+      top: 50%;
+      transform: translateY(-50%);
+      font-family: 'Playfair Display', serif;
+      font-size: 14rem;
+      color: rgba(201,168,76,0.04);
+      pointer-events: none;
+      white-space: nowrap;
+    }
+
+    .about-inner {
+      max-width: 750px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .about-inner p {
+      font-size: 1.1rem;
+      line-height: 2;
+      color: rgba(245,240,232,0.8);
+      margin-bottom: 1.5rem;
+    }
+
+    .about-inner p strong { color: var(--gold); }
+
+    /* ── STATS ── */
+    .stats-bar {
+      background: rgba(201,168,76,0.08);
+      border-top: 1px solid rgba(201,168,76,0.15);
+      border-bottom: 1px solid rgba(201,168,76,0.15);
+      padding: 2.5rem 2rem;
+    }
+
+    .stats-inner {
+      display: flex;
+      justify-content: center;
+      gap: 4rem;
+      flex-wrap: wrap;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    .stat {
+      text-align: center;
+    }
+
+    .stat-number {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: var(--gold);
+      display: block;
+    }
+
+    .stat-label {
+      font-size: 0.8rem;
+      letter-spacing: 2px;
+      color: rgba(245,240,232,0.5);
+      text-transform: uppercase;
+    }
+
+    /* ── FEATURED SHER ── */
+    .featured-section {
+      background:
+        radial-gradient(ellipse 70% 70% at 50% 50%, rgba(139,58,30,0.2) 0%, transparent 70%),
+        #0f0a04;
+      text-align: center;
+      padding: 6rem 2rem;
+    }
+
+    .featured-quote {
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: clamp(1.3rem, 3vw, 1.9rem);
+      line-height: 2.4;
+      color: var(--cream);
+      font-style: italic;
+      position: relative;
+      padding: 3rem;
+    }
+
+    .featured-quote::before,
+    .featured-quote::after {
+      content: '';
+      position: absolute;
+      width: 60px; height: 60px;
+      border-color: var(--gold);
+      border-style: solid;
+      opacity: 0.3;
+    }
+
+    .featured-quote::before {
+      top: 0; left: 0;
+      border-width: 1px 0 0 1px;
+    }
+
+    .featured-quote::after {
+      bottom: 0; right: 0;
+      border-width: 0 1px 1px 0;
+    }
+
+    .featured-attr {
+      margin-top: 1.5rem;
+      color: var(--gold);
+      font-size: 0.85rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+    }
+
+    /* ── FACEBOOK CTA ── */
+    .cta-section {
+      background: var(--ink);
+      text-align: center;
+      padding: 5rem 2rem;
+      border-top: 1px solid rgba(201,168,76,0.1);
+    }
+
+    .cta-section h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      color: var(--cream);
+      margin-bottom: 1rem;
+    }
+
+    .cta-section p {
+      color: rgba(245,240,232,0.6);
+      margin-bottom: 2rem;
+      font-size: 1rem;
+      line-height: 1.8;
+    }
+
+    .fb-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.8rem;
+      background: #1877f2;
+      color: #fff;
+      padding: 1rem 2.5rem;
+      font-size: 1rem;
+      font-family: 'Noto Serif Devanagari', serif;
+      font-weight: 700;
+      text-decoration: none;
+      border-radius: 2px;
+      transition: all 0.3s;
+      letter-spacing: 0.5px;
+    }
+
+    .fb-link:hover {
+      background: #1464d8;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(24,119,242,0.3);
+    }
+
+    .fb-icon {
+      width: 22px; height: 22px;
+      fill: white;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #080503;
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid rgba(201,168,76,0.1);
+    }
+
+    footer p {
+      color: rgba(245,240,232,0.3);
+      font-size: 0.8rem;
+      letter-spacing: 1px;
+    }
+
+    footer a { color: var(--gold); text-decoration: none; }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to   { opacity: 0.6; transform: translateY(0); }
+    }
+
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Scroll reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.8s ease, transform 0.8s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ── MOBILE ── */
+    @media (max-width: 600px) {
+      nav { padding: 1rem 1.2rem; }
+      .nav-links { display: none; }
+      .hero::after { display: none; }
+      .stats-inner { gap: 2rem; }
+      .featured-quote { padding: 2rem 1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Ghalib Nama</a>
+  <ul class="nav-links">
+    <li><a href="#shayari">शायरी</a></li>
+    <li><a href="#about">परिचय</a></li>
+    <li><a href="#facebook" class="nav-fb">Facebook ↗</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-inner">
+    <span class="hero-ornament">❧</span>
+    <p class="hero-tagline">मिर्ज़ा असदुल्ला खान ग़ालिब</p>
+    <h1 class="hero-title"><em>Ghalib</em> Nama</h1>
+    <p class="hero-subtitle-hi">ग़ालिब नामा</p>
+    <blockquote class="hero-sher">
+      हज़ारों ख़्वाहिशें ऐसी कि हर ख़्वाहिश पे दम निकले,<br>
+      बहुत निकले मेरे अरमान लेकिन फिर भी कम निकले।
+    </blockquote>
+    <div class="hero-buttons">
+      <a href="#shayari" class="btn-primary">शायरी पढ़ें</a>
+      <a href="https://www.facebook.com/Ghalibnama" target="_blank" class="btn-secondary">Facebook Page ↗</a>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat">
+      <span class="stat-number">1797</span>
+      <span class="stat-label">जन्म वर्ष</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">1,000+</span>
+      <span class="stat-label">अशआर</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">2</span>
+      <span class="stat-label">दीवान — उर्दू & फ़ारसी</span>
+    </div>
+    <div class="stat">
+      <span class="stat-number">∞</span>
+      <span class="stat-label">दिलों में ज़िन्दा</span>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURED SHER -->
+<div class="featured-section">
+  <div class="section-header reveal">
+    <span class="section-label">शेर-ए-ख़ास</span>
+  </div>
+  <blockquote class="featured-quote reveal">
+    दर्द मिन्नत-कश-ए-दवा न हुआ<br>
+    मैं न अच्छा हुआ, बुरा न हुआ
+    <p class="featured-attr">— मिर्ज़ा ग़ालिब</p>
+  </blockquote>
+</div>
+
+<!-- SHAYARI GRID -->
+<section class="shayari-section" id="shayari">
+  <div class="section-header reveal">
+    <span class="section-label">ग़ालिब की ज़बान</span>
+    <h2 class="section-title">चुनिंदा <em>अशआर</em></h2>
+  </div>
+  <div class="shayari-grid">
+
+    <div class="sher-card reveal">
+      <p class="sher-text">
+        तुम जानो तुम्हारा काम है दिलदार कहे जाओ<br>
+        मुझको भी पता है तुम क्या हो पर प्यार कहे जाओ
+      </p>
+      <p class="sher-meaning">
+        <strong>मतलब:</strong> सच्चाई जानते हुए भी प्यार करना — यही इश्क़ की सबसे बड़ी त्रासदी है।
+      </p>
+    </div>
+
+    <div class="sher-card reveal">
+      <p class="sher-text">
+        बाज़ीचा-ए-अतफ़ाल है दुनिया मेरे आगे,<br>
+        होता है शब-ओ-रोज़ तमाशा मेरे आगे।
+      </p>
+      <p class="sher-meaning">
+        <strong>मतलब:</strong> मेरे लिए दुनिया बच्चों के खेल जैसी है। हर दिन यहाँ नए-नए तमाशे होते रहते हैं।
+      </p>
+    </div>
+
+    <div class="sher-card reveal">
+      <p class="sher-text">
+        क़ैद-ए-हयात और बंद-ए-ग़म, अस्ल में दोनों एक हैं,<br>
+        मौत से पहले आदमी ग़म से निजात पाए क्यों?
+      </p>
+      <p class="sher-meaning">
+        <strong>मतलब:</strong> ज़िंदगी ख़ुद ही दुखों की क़ैद है। जब तक इंसान ज़िंदा है, दुखों से पूरी तरह आज़ाद नहीं हो सकता।
+      </p>
+    </div>
+
+    <div class="sher-card reveal">
+      <p class="sher-text">
+        रंज से ख़ूगर हुआ इंसान तो मिट जाता है रंज,<br>
+        मुश्किलें मुझ पर पड़ीं इतनी कि आसाँ हो गईं।
+      </p>
+      <p class="sher-meaning">
+        <strong>मतलब:</strong> जब इंसान दुख सहने का आदी हो जाता है, तो दुख भी आसान लगने लगता है।
+      </p>
+    </div>
+
+    <div class="sher-card reveal">
+      <p class="sher-text">
+        हुई मुद्दत कि 'ग़ालिब' मर गया, पर याद आता है,<br>
+        वो हर एक बात पे कहना कि यूँ होता तो क्या होता।
+      </p>
+      <p class="sher-meaning">
+        <strong>मतलब:</strong> इंसान चला जाता है, लेकिन उसकी बातें और अंदाज़ हमेशा याद रहते हैं।
+      </p>
+    </div>
+
+    <div class="sher-card reveal">
+      <p class="sher-text">
+        दिल-ए-नादाँ तुझे हुआ क्या है?<br>
+        आख़िर इस दर्द की दवा क्या है?
+      </p>
+      <p class="sher-meaning">
+        <strong>मतलब:</strong> ओ नासमझ दिल, तुझे क्या हुआ है? इस दर्द की कोई दवा भी है?
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about-section" id="about">
+  <div class="section-header reveal">
+    <span class="section-label">परिचय</span>
+    <h2 class="section-title">मिर्ज़ा <em>असदुल्ला</em> ख़ान ग़ालिब</h2>
+  </div>
+  <div class="about-inner">
+    <p class="reveal">
+      <strong>मिर्ज़ा ग़ालिब</strong> (1797–1869) उर्दू और फ़ारसी के सबसे महान शायरों में से एक हैं।
+      उनकी शायरी में प्रेम, दर्शन, और जीवन की गहरी सच्चाइयाँ बड़े खूबसूरत अंदाज़ में बयाँ होती हैं।
+    </p>
+    <p class="reveal">
+      <strong>ग़ालिब नामा</strong> एक ऐसा मंच है जहाँ ग़ालिब के अशआर को आज की भाषा में समझाया जाता है —
+      ताकि उनकी शायरी की रोशनी हर दिल तक पहुँच सके।
+    </p>
+    <p class="reveal">
+      हमारे <strong>Facebook Page</strong> पर रोज़ नए अशआर, उनके मतलब, और रीलें शेयर की जाती हैं।
+      जुड़िए और ग़ालिब की दुनिया में डूब जाइए।
+    </p>
+  </div>
+</section>
+
+<!-- FACEBOOK CTA -->
+<section class="cta-section" id="facebook">
+  <h2 class="reveal">हमारे Facebook Page से जुड़ें</h2>
+  <p class="reveal">
+    रोज़ नई शायरी, मतलब के साथ — सिर्फ़ <strong>Ghalib Nama</strong> पर।<br>
+    Like करें, Follow करें और Share करें।
+  </p>
+  <div class="reveal">
+    <a href="https://www.facebook.com/Ghalibnama" target="_blank" class="fb-link">
+      <svg class="fb-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+      </svg>
+      facebook.com/Ghalibnama पर जाएं
+    </a>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="divider" style="margin-bottom:1rem;">❧</div>
+  <p>© 2024 <a href="https://www.facebook.com/Ghalibnama" target="_blank">Ghalib Nama</a> — ग़ालिब नामा। सभी अधिकार सुरक्षित।</p>
+</footer>
+
+<script>
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+
+  // Scroll reveal
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>
